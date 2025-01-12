@@ -33,19 +33,38 @@ def main(page: ft.Page):
         ),
         border_radius=0,
         expand=True,
-        padding=0,
+        padding=32,
         margin=0
         )
 
         return bg_gradient
 
     def main_box():
-        return ft.Container(bgcolor=ft.Colors.WHITE, expand=True, margin=24, border_radius=20)
+        subtitle = ft.Text('Assistente de Correção Monetária do Banco Central', size='14', color=ft.Colors.GREY_600)
+        drop_file_box = ft.Draggable(group='file', content=ft.Container(bgcolor=ft.Colors.GREY_600, expand=True))
+        
+        btn_select_file = ft.ElevatedButton("Choose files...",
+        on_click=lambda _: file_picker.pick_files(allow_multiple=True))
+
+        file_picker = ft.FilePicker()
+        page.overlay.append(file_picker)
+        page.update()
+
+        return ft.Container(content=ft.Column([subtitle, btn_select_file],
+                                              horizontal_alignment=ft.CrossAxisAlignment.CENTER), 
+                                              bgcolor=ft.Colors.WHITE, 
+                                              expand=True, 
+                                              margin=24,
+                                              padding=16, 
+                                              border_radius=20)
 
     def logo_header():
-        image_logo = ft.Image(src='assets/bot.png', color=ft.Colors.INDIGO_500)
-        title_logo = ft.Text('Cronos', font_family='Roboto', size=16, weight=ft.FontWeight.W_500)
-        return ft.Container(content=ft.Row([image_logo, title_logo], alignment=ft.MainAxisAlignment.CENTER, vertical_alignment=ft.CrossAxisAlignment.CENTER))
+        image_logo = ft.Image(src=r'src\assets\bot.svg', color=ft.Colors.INDIGO_400, width=60, height=60)
+        title_logo = ft.Text('Cronos', font_family='Roboto', size=32, weight=ft.FontWeight.W_700)
+        return ft.Container(content=ft.Row([image_logo, title_logo],
+                                           spacing=12, 
+                                           alignment=ft.MainAxisAlignment.CENTER, 
+                                           vertical_alignment=ft.CrossAxisAlignment.CENTER))
 
     page.add(
         background_gradient()
